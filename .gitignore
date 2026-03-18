@@ -1,0 +1,15 @@
+# Backend
+BE/venv/
+BE/db.sqlite3
+BE/__pycache__/
+BE/**/__pycache__/
+BE/**/*.pyc
+BE/.env
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+
+# General
+.DS_Store
