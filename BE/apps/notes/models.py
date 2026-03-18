@@ -5,9 +5,9 @@ from django.core.exceptions import ValidationError
 
 class Category(models.Model):
     COLORS = [
-        ("#F8C9D4", "Pink"),
-        ("#C9E4F8", "Blue"),
-        ("#C9F8D4", "Green"),
+        ("#EF9C66", "Orange"),
+        ("#FCDC94", "Yellow"),
+        ("#78ABA8", "Teal"),
     ]
 
     name = models.CharField(max_length=100)
@@ -48,5 +48,3 @@ class Note(models.Model):
 
     def __str__(self):
         return self.title or "Untitled"
-
-# Create your models here.

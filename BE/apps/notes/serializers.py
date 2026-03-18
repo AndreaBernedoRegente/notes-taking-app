@@ -3,7 +3,12 @@ from .models import Note, Category
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    note_count = serializers.IntegerField(source="notes.count", read_only=True)
+    note_count = serializers.SerializerMethodField()
+
+    def get_note_count(self, obj):
+        if hasattr(obj, "note_count"):
+            return obj.note_count
+        return obj.notes.count()
 
     class Meta:
         model = Category
@@ -21,3 +26,8 @@ class NoteSerializer(serializers.ModelSerializer):
             "created_at", "updated_at",
         ]
         read_only_fields = ["created_at", "updated_at"]
+
+    def validate_category(self, category):
+        if category and category.user != self.context["request"].user:
+            raise serializers.ValidationError("Category does not belong to you.")
+        return category

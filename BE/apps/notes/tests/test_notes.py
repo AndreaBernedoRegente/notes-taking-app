@@ -62,3 +62,15 @@ class NotesTests(TestCase):
         note = Note.objects.create(user=other_user, title="Private")
         response = self.client.get(f"/api/notes/{note.id}/")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_cannot_assign_other_users_category(self):
+        other_user = User.objects.create_user(
+            email="other@test.com",
+            password="testpass123"
+        )
+        other_category = other_user.categories.first()
+        response = self.client.post("/api/notes/", {
+            "title": "Test",
+            "category": other_category.id
+        })
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
